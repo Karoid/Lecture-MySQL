@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  web:
+    image: node:16-bullseye
+    environment:
+      node_port: "3000"
+      node_host: "0.0.0.0"
+      mongo_host: "root:example@db"
+      mongo_port: "27017"
+    volumes:
+      - .:/usr/src/app
+    working_dir: "/usr/src/app"
+    command: "npm start"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  db:
+    image: mongo:5.0.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
